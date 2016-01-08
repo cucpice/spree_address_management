@@ -16,10 +16,10 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.requirements << 'none'
 
-  spree_version = '~> 2.3'
-  s.add_dependency 'spree_core', spree_version
-  s.add_dependency 'spree_frontend', spree_version
-  s.add_dependency 'spree_backend', spree_version
+  spree_version = '~> 1.0'
+  s.add_dependency 'solidus_core', spree_version
+  s.add_dependency 'solidus_frontend', spree_version
+  s.add_dependency 'solidus_backend', spree_version
 
   s.add_development_dependency 'sass-rails', '~> 4.0.2'
   s.add_development_dependency 'coffee-rails'
