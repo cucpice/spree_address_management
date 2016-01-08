@@ -73,8 +73,9 @@ Spree::Address.class_eval do
       "#{h company}",
       "#{h address1}",
       "#{h address2}",
-      "#{h city} #{h state_text} #{h zipcode}",
-      "#{h country}"
+      "#{h city}",
+      "#{h state_readable_text}",
+      "#{h zipcode} #{h country}"
     ].reject(&:empty?).join(" <br/>").html_safe
   end
 
@@ -113,6 +114,11 @@ Spree::Address.class_eval do
   # Returns orders linked to this address, using the with_address order scope.
   def orders
     Spree::Order.with_address(self)
+  end
+
+  # @return [String] a string representation of this state
+  def state_readable_text
+    state.try(:name) || state_name || state.try(:abbr)
   end
 
   private
