@@ -76,6 +76,17 @@ class Spree::AddressBookList
     address && @mapped_addresses[address.comparison_attributes.except('user_id')]
   end
 
+  # @param [Sym] type = bill || ship
+  # Returns a Array of Spree::Address and sort the only active with the specified +type+ for the first record
+  def addresses_active_first(type)
+    return [] if self.user.nil? || type.nil?
+    return [] unless [:ship, :bill].include?(type.to_sym)
+    addr = []
+    addr << self.send("user_#{type}".to_sym).addresses
+    addr << addresses.reject{|u| u == self.send("user_#{type}".to_sym)}.map(&:addresses)
+    addr.flatten
+  end
+
   private
   # Makes sure the +user+ owns their default address of the given +type+
   # (:ship_address or :bill_address).
