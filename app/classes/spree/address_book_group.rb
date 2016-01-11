@@ -146,4 +146,19 @@ class Spree::AddressBookGroup
 
     result
   end
+
+  # check if this group is active in bill or ship
+  def active?(type)
+    return false unless user_bill || user_ship
+    return false unless [:ship, :bill].include?(type.to_sym)
+    self.send("user_#{type}".to_sym).present?
+  end
+
+  def method_missing(sym)
+    if primary_address.respond_to?(sym)
+      primary_address.send(sym)
+    else
+      super
+    end
+  end
 end
