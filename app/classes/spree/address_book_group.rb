@@ -150,6 +150,7 @@ class Spree::AddressBookGroup
   # check if this group is active in bill or ship
   def active?(type)
     return false unless user_bill || user_ship
+    return false if type.nil?
     return false unless [:ship, :bill].include?(type.to_sym)
     self.send("user_#{type}".to_sym).present?
   end
