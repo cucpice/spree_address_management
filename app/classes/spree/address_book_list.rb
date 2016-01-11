@@ -79,11 +79,17 @@ class Spree::AddressBookList
   # @param [Sym] type = bill || ship
   # Returns a Array of Spree::Address and sort the only active with the specified +type+ for the first record
   def addresses_active_first(type)
-    return [] if self.user.nil? || type.nil?
+    return [] if self.user.nil? || type.nil? || self.addresses.nil?
     return [] unless [:ship, :bill].include?(type.to_sym)
     addr = []
-    addr << self.send("user_#{type}".to_sym).addresses
-    addr << addresses.reject{|u| u == self.send("user_#{type}".to_sym)}.map(&:addresses)
+    addr << self.send("user_#{type}".to_sym) unless self.send("user_#{type}".to_sym).nil?
+    addr << addresses.reject{|u|
+      if self.send("user_#{type}")
+        u == self.send("user_#{type}".to_sym)
+      else
+        false
+      end
+    }
     addr.flatten
   end
 
