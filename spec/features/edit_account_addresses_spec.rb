@@ -75,7 +75,7 @@ feature 'User editing addresses for their account' do
         Spree.t(:last_name) => 'Last',
         Spree.t(:address1) => '123 Fake',
         Spree.t(:city) => 'Somewhere',
-        Spree.t(:state) => Spree::State.first.name,
+        Spree::State.model_name.human => Spree::State.first.name,
         Spree.t(:zipcode) => '12345',
         Spree.t(:phone) => '555-555-5555'
       )

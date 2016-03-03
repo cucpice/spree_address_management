@@ -74,7 +74,7 @@
   </div>
 
   <div class="field address-row">
-    <%= f.label :state_id, Spree.t(:state) %>
+    <%= f.label :state_id, Spree::State.model_name.human %>
     <span id="address_state">
       <%= f.text_field :state_name,
             :style => "display: #{f.object.country.states.empty? ? 'block' : 'none' };",

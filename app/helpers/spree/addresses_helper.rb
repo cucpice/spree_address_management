@@ -35,7 +35,7 @@ module Spree::AddressesHelper
       )
     ].join.gsub('"', "'").gsub("\n", "")
 
-    form.label(:state_id, Spree.t(:state)) +
+    form.label(:state_id, Spree::State.model_name.human) +
       %Q(<span class="required" id="#{address_id}state-required">*</span>).html_safe +
       content_tag(:noscript, form.text_field(:state_name, :class => 'required')) +
       javascript_tag("document.write(\"#{state_elements.html_safe}\");")

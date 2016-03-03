@@ -76,12 +76,12 @@ module SpreeAddressManagement
           select values.country.name, from: Spree.t(:country) if values.country
           fill_in Spree.t(:city), with: values.city
           fill_in Spree.t(:zipcode), with: values.zipcode
-          select values.state.name, from: Spree.t(:state)
+          select values.state.name, from: Spree::State.model_name.human
           fill_in Spree.t(:phone), with: values.phone
           fill_in Spree.t(:alternative_phone), with: values.alternative_phone if Spree::Config[:alternative_shipping_phone]
         elsif values.is_a?(Hash)
           values.each do |k, v|
-            if k == Spree.t(:country) || k == Spree.t(:state)
+            if k == Spree.t(:country) || k == Spree::State.model_name.human
               select v, from: k
             else
               fill_in k, with: v
