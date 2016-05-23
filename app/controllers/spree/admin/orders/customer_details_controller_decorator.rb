@@ -14,7 +14,7 @@ Spree::Admin::Orders::CustomerDetailsController.class_eval do
 
     @user ||= @order.user
 
-    if @order.user != @user
+    if @order.user != @user && @order.user.present?
       raise "Given user and order's user do not match!"
     end
   end
