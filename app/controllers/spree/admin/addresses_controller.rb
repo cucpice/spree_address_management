@@ -127,6 +127,20 @@ module Spree
           end
         end
 
+        def model_name
+          "Spree::Address"
+        end
+
+        #fix the problem in resource_controller#load_resource_instance on update_addresses action
+        def load_resource_instance
+          if new_actions.include?(action)
+            build_resource
+          elsif params[:id]
+            find_resource
+          else
+            model_name.constantize.new
+          end
+        end
       private
         def find_address
           if @order && !@user
@@ -164,7 +178,10 @@ module Spree
             raise "User ID does not match order's user ID!"
           end
 
-          authorize! :update, @user if @user
+          #only allow update user on update_addresses action
+          if @user && action.to_sym != :update_addresses
+            authorize! :update, @user
+          end
           authorize! :update, @order if @order
 
           if @order.nil? && @user.nil?
